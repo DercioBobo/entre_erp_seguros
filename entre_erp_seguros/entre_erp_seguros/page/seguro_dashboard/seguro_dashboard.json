@@ -1,0 +1,16 @@
+{
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "Page",
+ "module": "Entre Erp Seguros",
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "name": "seguro-dashboard",
+ "owner": "Administrator",
+ "page_name": "seguro-dashboard",
+ "roles": [
+  {"doctype": "Has Role", "role": "System Manager"},
+  {"doctype": "Has Role", "role": "All"}
+ ],
+ "system_page": 0,
+ "title": "Dashboard de Seguros"
+}

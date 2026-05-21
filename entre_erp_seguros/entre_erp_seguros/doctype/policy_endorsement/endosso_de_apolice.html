@@ -1,0 +1,317 @@
+{%- set brand = "#F57C00" -%}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+    color: #212121;
+    background: #fff;
+  }
+
+  .doc-header {
+    background: {{ brand }};
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .doc-header .brand-block .company { font-size: 15pt; font-weight: 800; letter-spacing: 1px; }
+  .doc-header .brand-block .tagline  { font-size: 7.5pt; opacity: .85; margin-top: 2px; }
+  .doc-header .doc-title { text-align: right; }
+  .doc-header .doc-title h1 { font-size: 14pt; font-weight: 700; letter-spacing: .5px; }
+  .doc-header .doc-title .ref-num {
+    font-size: 11pt; font-family: monospace;
+    background: rgba(255,255,255,.18);
+    border-radius: 4px; padding: 2px 8px;
+    margin-top: 4px; display: inline-block;
+  }
+
+  .status-row {
+    display: flex; align-items: center;
+    padding: 8px 28px;
+    border-bottom: 2px solid {{ brand }};
+    gap: 10px;
+  }
+  .badge {
+    display: inline-block; padding: 3px 12px;
+    border-radius: 999px; font-size: 8pt; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+  }
+  .badge-grey   { background: #eceff1; color: #546e7a; }
+  .badge-orange { background: #fff3e0; color: #e65100; }
+  .badge-green  { background: #e8f5e9; color: #2e7d32; }
+  .badge-red    { background: #ffebee; color: #c62828; }
+  .issued-info { font-size: 8pt; color: #616161; margin-left: auto; }
+
+  .doc-body { padding: 18px 28px; }
+
+  .section {
+    margin-bottom: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .section-title {
+    background: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 6px 14px;
+    font-size: 7.5pt; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: {{ brand }};
+  }
+  .section-body { padding: 12px 14px; }
+
+  .info-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+  .info-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 20px; }
+  .info-item .lbl { font-size: 7pt; text-transform: uppercase; letter-spacing: .5px; color: #9e9e9e; }
+  .info-item .val { font-size: 9.5pt; font-weight: 600; color: #212121; margin-top: 1px; }
+  .info-item .val.big { font-size: 11pt; color: {{ brand }}; }
+
+  /* Change-comparison box */
+  .change-box {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .change-before {
+    padding: 12px 14px;
+    background: #fff3e0;
+  }
+  .change-arrow {
+    display: flex; align-items: center; justify-content: center;
+    background: #f5f5f5;
+    font-size: 14pt; color: {{ brand }};
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
+  }
+  .change-after {
+    padding: 12px 14px;
+    background: #e8f5e9;
+  }
+  .change-label { font-size: 7pt; text-transform: uppercase; color: #9e9e9e; margin-bottom: 4px; }
+  .change-value { font-size: 10pt; font-weight: 700; }
+  .change-before .change-value { color: #bf360c; }
+  .change-after  .change-value { color: #1b5e20; }
+
+  .narrative {
+    font-size: 8.5pt; line-height: 1.7; color: #424242;
+    white-space: pre-wrap; word-break: break-word;
+  }
+
+  .applied-box {
+    background: #e8f5e9;
+    border: 1px solid #a5d6a7;
+    border-radius: 4px;
+    padding: 10px 14px;
+    font-size: 8.5pt; color: #1b5e20;
+  }
+
+  .bottom-row {
+    margin-top: 24px;
+    display: flex; justify-content: space-between; gap: 24px;
+  }
+  .signature-block { flex: 1; }
+  .signature-line {
+    border-top: 1px solid #bbb;
+    margin-top: 44px; padding-top: 4px;
+    font-size: 7.5pt; color: #757575; text-align: center;
+  }
+
+  .doc-footer {
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 28px;
+    font-size: 7pt; color: #9e9e9e; text-align: center;
+  }
+
+  @media print {
+    body { font-size: 8.5pt; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+{%- set status_badge = {
+  "Rascunho": "badge-grey",
+  "Pendente de Aprovação": "badge-orange",
+  "Aprovado": "badge-green",
+  "Recusado": "badge-red",
+}.get(doc.status, "badge-grey") -%}
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="brand-block">
+    <div class="company">Entre Seguros</div>
+    <div class="tagline">Corretor de Seguros · Moçambique</div>
+  </div>
+  <div class="doc-title">
+    <h1>ENDOSSO DE APÓLICE</h1>
+    <div class="ref-num">{{ doc.name }}</div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="status-row">
+  <span class="badge {{ status_badge }}">{{ doc.status }}</span>
+  <span style="font-size:8pt; color:#616161; font-weight:600;">{{ doc.endorsement_type }}</span>
+  {%- if doc.effective_date %}
+  <span style="font-size:8pt; color:#616161; margin-left:12px;">
+    Vigência: {{ frappe.utils.formatdate(doc.effective_date, "dd/MM/yyyy") }}
+  </span>
+  {%- endif %}
+  <span class="issued-info">Apólice: <strong>{{ doc.policy }}</strong></span>
+</div>
+
+<div class="doc-body">
+
+  <!-- 1. IDENTIFICAÇÃO -->
+  <div class="section">
+    <div class="section-title">Identificação</div>
+    <div class="section-body">
+      <div class="info-grid-3">
+        <div class="info-item">
+          <div class="lbl">Segurado</div>
+          <div class="val">{{ doc.customer_full_name }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Apólice</div>
+          <div class="val">{{ doc.policy }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Ramo</div>
+          <div class="val">{{ doc.branch or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Capital Segurado Actual</div>
+          <div class="val big">MT {{ "{:,.2f}".format(doc.current_sum_insured or 0) }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Cobertura Actual</div>
+          <div class="val">
+            {{ frappe.utils.formatdate(doc.coverage_start_date, "dd/MM/yyyy") if doc.coverage_start_date else "—" }}
+            &nbsp;→&nbsp;
+            {{ frappe.utils.formatdate(doc.coverage_end_date, "dd/MM/yyyy") if doc.coverage_end_date else "—" }}
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Data de Pedido</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.request_date, "dd/MM/yyyy") if doc.request_date else "—" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ALTERAÇÃO PROPOSTA -->
+  <div class="section">
+    <div class="section-title">Alteração Proposta</div>
+    <div class="section-body">
+      {%- if doc.description %}
+      <div style="margin-bottom:12px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#9e9e9e; letter-spacing:.5px; margin-bottom:4px;">Descrição</div>
+        <div class="narrative">{{ doc.description | striptags }}</div>
+      </div>
+      {%- endif %}
+
+      {%- if doc.previous_value or doc.new_value %}
+      <div class="change-box">
+        <div class="change-before">
+          <div class="change-label">Situação / Valor Anterior</div>
+          <div class="change-value">{{ doc.previous_value or "—" }}</div>
+        </div>
+        <div class="change-arrow">→</div>
+        <div class="change-after">
+          <div class="change-label">Nova Situação / Novo Valor</div>
+          <div class="change-value">{{ doc.new_value or "—" }}</div>
+        </div>
+      </div>
+      {%- endif %}
+
+      {%- if doc.additional_premium %}
+      <div style="margin-top:10px;">
+        <div class="info-item">
+          <div class="lbl">Prémio Adicional</div>
+          <div class="val big">MT {{ "{:,.2f}".format(doc.additional_premium) }}</div>
+        </div>
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+
+  <!-- 3. REGISTO DAS ALTERAÇÕES APLICADAS -->
+  {%- if doc.applied_changes %}
+  <div class="section">
+    <div class="section-title">Alterações Aplicadas ao Sistema</div>
+    <div class="section-body">
+      <div class="applied-box">{{ doc.applied_changes }}</div>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 4. APROVAÇÃO / RECUSA -->
+  {%- if doc.status in ("Aprovado", "Recusado") %}
+  <div class="section">
+    <div class="section-title">{{ "Aprovação" if doc.status == "Aprovado" else "Recusa" }}</div>
+    <div class="section-body">
+      <div class="info-grid">
+        {%- if doc.approved_by %}
+        <div class="info-item">
+          <div class="lbl">{{ "Aprovado" if doc.status == "Aprovado" else "Decidido" }} por</div>
+          <div class="val">{{ doc.approved_by }}</div>
+        </div>
+        {%- endif %}
+        {%- if doc.approved_date %}
+        <div class="info-item">
+          <div class="lbl">Data</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.approved_date, "dd/MM/yyyy") }}</div>
+        </div>
+        {%- endif %}
+      </div>
+      {%- if doc.rejection_reason %}
+      <div style="margin-top:8px; background:#ffebee; border:1px solid #ef9a9a; border-radius:4px; padding:8px 12px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#c62828; letter-spacing:.5px; margin-bottom:3px;">Motivo de Recusa</div>
+        <div style="font-size:8.5pt; color:#c62828;">{{ doc.rejection_reason }}</div>
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 5. DECLARAÇÃO -->
+  <div style="margin: 16px 0; font-size:8pt; line-height:1.7; color:#424242; border: 1px solid #e0e0e0; border-radius:6px; padding: 12px 14px;">
+    Declaro que as informações prestadas neste endosso são verdadeiras e que aceito as condições
+    da alteração acima descrita. Este documento, devidamente assinado pelas partes, constitui
+    aditamento válido à apólice <strong>{{ doc.policy }}</strong> e faz parte integrante da mesma.
+  </div>
+
+  <!-- 6. ASSINATURAS -->
+  <div class="bottom-row">
+    <div class="signature-block">
+      <div style="font-size:7.5pt; color:#9e9e9e;">Segurado: {{ doc.customer_full_name }}</div>
+      <div class="signature-line">Assinatura do Segurado</div>
+    </div>
+    <div class="signature-block">
+      <div style="font-size:7.5pt; color:#9e9e9e;">&nbsp;</div>
+      <div class="signature-line">Aprovação / Corretor</div>
+    </div>
+  </div>
+
+</div><!-- /doc-body -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  Endosso {{ doc.name }} · Apólice {{ doc.policy }} · Gerado em {{ frappe.utils.formatdate(frappe.utils.nowdate(), "dd/MM/yyyy") }} pelo sistema Entre Seguros.
+  Este documento só produz efeitos após assinatura de ambas as partes.
+</div>
+
+</body>
+</html>

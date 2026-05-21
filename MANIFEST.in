@@ -1,0 +1,2 @@
+include *.md *.txt *.cfg
+recursive-include entre_erp_seguros *.json *.csv *.html *.js *.css *.py

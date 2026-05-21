@@ -1,0 +1,231 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "REC-SIN-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_references",
+  "claim",
+  "policy",
+  "customer",
+  "col_break_references",
+  "issued_by",
+  "payment_date",
+  "section_incident",
+  "claim_type",
+  "incident_date",
+  "col_break_incident",
+  "beneficiary_name",
+  "beneficiary_bi",
+  "section_values",
+  "approved_amount",
+  "deductible_amount",
+  "col_break_values",
+  "net_paid_amount",
+  "section_payment",
+  "payment_method",
+  "payment_reference",
+  "section_notes",
+  "settlement_notes",
+  "section_signature",
+  "is_signed",
+  "signed_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_references",
+   "fieldtype": "Section Break",
+   "label": "Referências"
+  },
+  {
+   "fieldname": "claim",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Sinistro",
+   "options": "Insurance Claim",
+   "reqd": 1,
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "policy",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Apólice",
+   "options": "Insurance Policy",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_references",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "issued_by",
+   "fieldtype": "Link",
+   "label": "Emitido por",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Data de Pagamento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_incident",
+   "fieldtype": "Section Break",
+   "label": "Sinistro e Beneficiário"
+  },
+  {
+   "fieldname": "claim_type",
+   "fieldtype": "Link",
+   "label": "Tipo de Sinistro",
+   "options": "Coverage Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "incident_date",
+   "fieldtype": "Date",
+   "label": "Data do Sinistro",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_incident",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "beneficiary_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nome do Beneficiário",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "beneficiary_bi",
+   "fieldtype": "Data",
+   "label": "BI do Beneficiário",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_values",
+   "fieldtype": "Section Break",
+   "label": "Valores"
+  },
+  {
+   "fieldname": "approved_amount",
+   "fieldtype": "Currency",
+   "label": "Valor Aprovado (MT)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "deductible_amount",
+   "fieldtype": "Currency",
+   "label": "Franquia (MT)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_values",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "net_paid_amount",
+   "fieldtype": "Currency",
+   "label": "Valor Líquido Pago (MT)",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "section_payment",
+   "fieldtype": "Section Break",
+   "label": "Forma de Pagamento"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Data",
+   "label": "Método de Pagamento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_reference",
+   "fieldtype": "Data",
+   "label": "Referência de Pagamento",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_notes",
+   "fieldtype": "Section Break",
+   "label": "Notas",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "settlement_notes",
+   "fieldtype": "Text",
+   "label": "Notas de Liquidação"
+  },
+  {
+   "fieldname": "section_signature",
+   "fieldtype": "Section Break",
+   "label": "Assinatura"
+  },
+  {
+   "fieldname": "is_signed",
+   "fieldtype": "Check",
+   "label": "Documento Assinado pelo Beneficiário"
+  },
+  {
+   "fieldname": "signed_date",
+   "fieldtype": "Date",
+   "label": "Data de Assinatura",
+   "depends_on": "eval:doc.is_signed"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Claim Settlement Receipt",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "search_fields": "claim,customer,payment_date",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "beneficiary_name",
+ "track_changes": 1
+}

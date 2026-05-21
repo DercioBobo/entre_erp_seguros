@@ -1,0 +1,199 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "PAG-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "is_submittable": 1,
+ "field_order": [
+  "section_policy",
+  "policy",
+  "policy_number",
+  "col_break_policy",
+  "customer",
+  "status",
+  "section_payment",
+  "amount",
+  "payment_date",
+  "col_break_payment",
+  "payment_method",
+  "payment_channel_reference",
+  "section_accounting",
+  "sales_invoice",
+  "payment_entry",
+  "section_operator",
+  "operator",
+  "section_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_policy",
+   "fieldtype": "Section Break",
+   "label": "Apólice"
+  },
+  {
+   "fieldname": "policy",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Apólice",
+   "options": "Insurance Policy",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "policy_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Número da Apólice",
+   "read_only": 1,
+   "fetch_from": "policy.name"
+  },
+  {
+   "fieldname": "col_break_policy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "read_only": 1,
+   "fetch_from": "policy.customer"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Estado",
+   "options": "Rascunho\nSubmetido\nCancelado",
+   "default": "Rascunho",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_payment",
+   "fieldtype": "Section Break",
+   "label": "Detalhes do Pagamento"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Montante (MT)",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "payment_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Data de Pagamento",
+   "reqd": 1,
+   "default": "Today"
+  },
+  {
+   "fieldname": "col_break_payment",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Método de Pagamento",
+   "options": "\nDinheiro\nM-Pesa\ne-Mola\nTransferência Bancária\nCheque",
+   "reqd": 1
+  },
+  {
+   "fieldname": "payment_channel_reference",
+   "fieldtype": "Data",
+   "label": "Referência da Transacção",
+   "description": "Nº do recibo, ID da transacção M-Pesa, etc."
+  },
+  {
+   "fieldname": "section_accounting",
+   "fieldtype": "Section Break",
+   "label": "Lançamentos Contabilísticos",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Factura de Vendas",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_entry",
+   "fieldtype": "Link",
+   "label": "Lançamento de Pagamento",
+   "options": "Payment Entry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_operator",
+   "fieldtype": "Section Break",
+   "label": "Operador",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "operator",
+   "fieldtype": "Link",
+   "label": "Operador",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_notes",
+   "fieldtype": "Section Break",
+   "label": "Notas",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text",
+   "label": "Notas"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Premium Payment",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "cancel": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "policy,customer,payment_method",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

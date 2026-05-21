@@ -1,0 +1,368 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "QT-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_identification",
+  "status",
+  "acceptance_status",
+  "col_break_id",
+  "linked_policy",
+  "section_customer",
+  "customer",
+  "customer_full_name",
+  "col_break_customer",
+  "customer_dob",
+  "customer_age",
+  "customer_gender",
+  "section_customer_docs",
+  "customer_bi",
+  "customer_nuit",
+  "col_break_customer_contact",
+  "customer_phone",
+  "customer_address",
+  "section_product",
+  "insurance_product",
+  "branch",
+  "col_break_product",
+  "sum_insured",
+  "term_months",
+  "section_dates",
+  "coverage_start_date",
+  "coverage_end_date",
+  "section_risk_factors",
+  "risk_factors_html",
+  "risk_factors_json",
+  "section_premium",
+  "base_rate_pct",
+  "total_loading_pct",
+  "final_rate_pct",
+  "col_break_premium",
+  "premium_amount",
+  "section_breakdown",
+  "premium_breakdown",
+  "refusal_reason",
+  "section_credit",
+  "financial_institution",
+  "credit_reference",
+  "section_notes",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_identification",
+   "fieldtype": "Section Break",
+   "label": "Estado da Cotação"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Estado",
+   "options": "Rascunho\nEnviada\nAceite\nExpirada\nRecusada",
+   "default": "Rascunho",
+   "bold": 1
+  },
+  {
+   "fieldname": "acceptance_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Estado de Aceitação",
+   "options": "\nAceite\nAceite com Carregamento\nPendente de Revisão\nRecusado",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_id",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "linked_policy",
+   "fieldtype": "Link",
+   "label": "Apólice Emitida",
+   "options": "Insurance Policy",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_customer",
+   "fieldtype": "Section Break",
+   "label": "Dados do Segurado"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "customer_full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nome Completo",
+   "read_only": 1,
+   "fetch_from": "customer.customer_name"
+  },
+  {
+   "fieldname": "col_break_customer",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_dob",
+   "fieldtype": "Date",
+   "label": "Data de Nascimento",
+   "reqd": 1
+  },
+  {
+   "fieldname": "customer_age",
+   "fieldtype": "Int",
+   "label": "Idade (anos)",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_gender",
+   "fieldtype": "Select",
+   "label": "Género",
+   "options": "\nMasculino\nFeminino"
+  },
+  {
+   "fieldname": "section_customer_docs",
+   "fieldtype": "Section Break",
+   "label": "Documentos e Contacto",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "customer_bi",
+   "fieldtype": "Data",
+   "label": "Bilhete de Identidade (BI)"
+  },
+  {
+   "fieldname": "customer_nuit",
+   "fieldtype": "Data",
+   "label": "NUIT"
+  },
+  {
+   "fieldname": "col_break_customer_contact",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_phone",
+   "fieldtype": "Data",
+   "label": "Telefone"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "label": "Endereço"
+  },
+  {
+   "fieldname": "section_product",
+   "fieldtype": "Section Break",
+   "label": "Produto e Cobertura"
+  },
+  {
+   "fieldname": "insurance_product",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Produto de Seguro",
+   "options": "Insurance Product",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Ramo",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_product",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Segurado (MT)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "term_months",
+   "fieldtype": "Int",
+   "label": "Prazo (meses)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_dates",
+   "fieldtype": "Section Break",
+   "label": "Período de Cobertura"
+  },
+  {
+   "fieldname": "coverage_start_date",
+   "fieldtype": "Date",
+   "label": "Início de Cobertura"
+  },
+  {
+   "fieldname": "coverage_end_date",
+   "fieldtype": "Date",
+   "label": "Fim de Cobertura",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_risk_factors",
+   "fieldtype": "Section Break",
+   "label": "Factores de Risco"
+  },
+  {
+   "fieldname": "risk_factors_html",
+   "fieldtype": "HTML",
+   "label": "Factores de Risco",
+   "options": "<div id='risk-factors-container' class='risk-factors-dynamic'><p class='text-muted'>Seleccione um produto para carregar os factores de risco.</p></div>"
+  },
+  {
+   "fieldname": "risk_factors_json",
+   "fieldtype": "Code",
+   "label": "Respostas (JSON)",
+   "options": "JSON",
+   "read_only": 1,
+   "description": "Preenchido automaticamente pelo formulário de factores de risco"
+  },
+  {
+   "fieldname": "section_premium",
+   "fieldtype": "Section Break",
+   "label": "Cálculo do Prémio",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "base_rate_pct",
+   "fieldtype": "Float",
+   "label": "Taxa Base (%)",
+   "read_only": 1,
+   "precision": "4"
+  },
+  {
+   "fieldname": "total_loading_pct",
+   "fieldtype": "Float",
+   "label": "Total de Carregamentos (%)",
+   "read_only": 1,
+   "precision": "4"
+  },
+  {
+   "fieldname": "final_rate_pct",
+   "fieldtype": "Float",
+   "label": "Taxa Final (%)",
+   "read_only": 1,
+   "precision": "4",
+   "bold": 1
+  },
+  {
+   "fieldname": "col_break_premium",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "premium_amount",
+   "fieldtype": "Currency",
+   "label": "Prémio Total (MT)",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "section_breakdown",
+   "fieldtype": "Section Break",
+   "label": "Detalhes do Cálculo",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "premium_breakdown",
+   "fieldtype": "Text",
+   "label": "Decomposição do Prémio",
+   "read_only": 1
+  },
+  {
+   "fieldname": "refusal_reason",
+   "fieldtype": "Text",
+   "label": "Motivo de Recusa",
+   "read_only": 1,
+   "depends_on": "eval:doc.acceptance_status == 'Recusado'"
+  },
+  {
+   "fieldname": "section_credit",
+   "fieldtype": "Section Break",
+   "label": "Dados de Crédito",
+   "collapsible": 1,
+   "depends_on": "eval:['VIDA','Crédito'].includes(doc.branch)"
+  },
+  {
+   "fieldname": "financial_institution",
+   "fieldtype": "Data",
+   "label": "Instituição Financeira"
+  },
+  {
+   "fieldname": "credit_reference",
+   "fieldtype": "Data",
+   "label": "Referência do Crédito"
+  },
+  {
+   "fieldname": "section_notes",
+   "fieldtype": "Section Break",
+   "label": "Notas",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text Editor",
+   "label": "Notas"
+  }
+ ],
+ "links": [
+  {
+   "group": "Apólice",
+   "link_doctype": "Insurance Policy",
+   "link_fieldname": "quotation"
+  }
+ ],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Insurance Quotation",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "customer,insurance_product,status",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_full_name",
+ "track_changes": 1
+}

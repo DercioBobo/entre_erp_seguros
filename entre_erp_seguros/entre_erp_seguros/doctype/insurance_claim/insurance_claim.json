@@ -1,0 +1,485 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "SIN-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_identification",
+  "policy",
+  "policy_number",
+  "customer",
+  "customer_full_name",
+  "col_break_identification",
+  "status",
+  "analyst",
+  "submission_date",
+  "section_policy_info",
+  "branch",
+  "insurance_product",
+  "sum_insured",
+  "col_break_policy_info",
+  "coverage_start_date",
+  "coverage_end_date",
+  "section_occurrence",
+  "incident_date",
+  "incident_location",
+  "claim_type",
+  "col_break_occurrence",
+  "how_reported",
+  "reported_by",
+  "reported_by_relationship",
+  "reported_by_phone",
+  "section_description",
+  "incident_description",
+  "section_waiting_period",
+  "is_within_waiting_period",
+  "waiting_period_warning",
+  "section_values",
+  "claimed_amount",
+  "deductible_amount",
+  "col_break_values",
+  "approved_amount",
+  "net_payable_amount",
+  "section_beneficiary",
+  "beneficiary_name",
+  "beneficiary_bi",
+  "beneficiary_relationship",
+  "col_break_beneficiary",
+  "payment_method",
+  "mobile_money_number",
+  "bank_name",
+  "bank_account",
+  "section_documents",
+  "documents",
+  "section_analysis",
+  "review_notes",
+  "approval_notes",
+  "pending_documents_note",
+  "rejection_reason",
+  "section_dates",
+  "analysis_start_date",
+  "decision_date",
+  "col_break_dates",
+  "settlement_date",
+  "section_settlement",
+  "settlement_reference",
+  "settlement_entry"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_identification",
+   "fieldtype": "Section Break",
+   "label": "Apólice e Estado"
+  },
+  {
+   "fieldname": "policy",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Apólice",
+   "options": "Insurance Policy",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "policy_number",
+   "fieldtype": "Data",
+   "label": "Nº Apólice",
+   "read_only": 1,
+   "fetch_from": "policy.name"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cliente",
+   "options": "Customer",
+   "read_only": 1,
+   "fetch_from": "policy.customer"
+  },
+  {
+   "fieldname": "customer_full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nome",
+   "read_only": 1,
+   "fetch_from": "policy.customer_full_name"
+  },
+  {
+   "fieldname": "col_break_identification",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Estado",
+   "options": "Rascunho\nSubmetido\nEm Análise\nPendente Documentação\nAprovado\nRejeitado\nEm Liquidação\nLiquidado\nCancelado",
+   "default": "Rascunho",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "analyst",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Analista",
+   "options": "User"
+  },
+  {
+   "fieldname": "submission_date",
+   "fieldtype": "Date",
+   "label": "Data de Participação",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_policy_info",
+   "fieldtype": "Section Break",
+   "label": "Dados da Apólice",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Data",
+   "label": "Ramo",
+   "read_only": 1,
+   "fetch_from": "policy.branch"
+  },
+  {
+   "fieldname": "insurance_product",
+   "fieldtype": "Link",
+   "label": "Produto",
+   "options": "Insurance Product",
+   "read_only": 1,
+   "fetch_from": "policy.insurance_product"
+  },
+  {
+   "fieldname": "sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Segurado (MT)",
+   "read_only": 1,
+   "fetch_from": "policy.sum_insured"
+  },
+  {
+   "fieldname": "col_break_policy_info",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "coverage_start_date",
+   "fieldtype": "Date",
+   "label": "Início de Cobertura",
+   "read_only": 1,
+   "fetch_from": "policy.coverage_start_date"
+  },
+  {
+   "fieldname": "coverage_end_date",
+   "fieldtype": "Date",
+   "label": "Fim de Cobertura",
+   "read_only": 1,
+   "fetch_from": "policy.coverage_end_date"
+  },
+  {
+   "fieldname": "section_occurrence",
+   "fieldtype": "Section Break",
+   "label": "Dados da Ocorrência"
+  },
+  {
+   "fieldname": "incident_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Data do Sinistro",
+   "reqd": 1
+  },
+  {
+   "fieldname": "incident_location",
+   "fieldtype": "Data",
+   "label": "Local do Sinistro"
+  },
+  {
+   "fieldname": "claim_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Tipo de Sinistro",
+   "options": "Coverage Type"
+  },
+  {
+   "fieldname": "col_break_occurrence",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "how_reported",
+   "fieldtype": "Select",
+   "label": "Como foi Reportado",
+   "options": "\nPresencial\nCarta\nWhatsApp\nTelefone\nEmail"
+  },
+  {
+   "fieldname": "reported_by",
+   "fieldtype": "Data",
+   "label": "Reportado por"
+  },
+  {
+   "fieldname": "reported_by_relationship",
+   "fieldtype": "Select",
+   "label": "Relação com o Segurado",
+   "options": "\nPróprio\nCônjuge\nFilho/a\nFamiliar\nAdvogado\nOutro"
+  },
+  {
+   "fieldname": "reported_by_phone",
+   "fieldtype": "Data",
+   "label": "Telefone do Declarante"
+  },
+  {
+   "fieldname": "section_description",
+   "fieldtype": "Section Break",
+   "label": "Descrição do Sinistro"
+  },
+  {
+   "fieldname": "incident_description",
+   "fieldtype": "Text Editor",
+   "label": "Descrição Detalhada",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_waiting_period",
+   "fieldtype": "Section Break",
+   "label": "Período de Carência",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "is_within_waiting_period",
+   "fieldtype": "Check",
+   "label": "Sinistro dentro do Período de Carência",
+   "read_only": 1
+  },
+  {
+   "fieldname": "waiting_period_warning",
+   "fieldtype": "HTML",
+   "label": "Aviso de Carência",
+   "options": "<div class='alert alert-warning'><strong>Atenção:</strong> A data do sinistro está dentro do período de carência definido para este produto. O analista deve avaliar a cobertura aplicável.</div>",
+   "depends_on": "eval:doc.is_within_waiting_period"
+  },
+  {
+   "fieldname": "section_values",
+   "fieldtype": "Section Break",
+   "label": "Valores"
+  },
+  {
+   "fieldname": "claimed_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Valor Reclamado (MT)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "deductible_amount",
+   "fieldtype": "Currency",
+   "label": "Franquia (MT)",
+   "default": "0"
+  },
+  {
+   "fieldname": "col_break_values",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "approved_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Valor Aprovado (MT)",
+   "bold": 1
+  },
+  {
+   "fieldname": "net_payable_amount",
+   "fieldtype": "Currency",
+   "label": "Valor Líquido a Pagar (MT)",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "section_beneficiary",
+   "fieldtype": "Section Break",
+   "label": "Beneficiário e Pagamento da Indemnização"
+  },
+  {
+   "fieldname": "beneficiary_name",
+   "fieldtype": "Data",
+   "label": "Nome do Beneficiário"
+  },
+  {
+   "fieldname": "beneficiary_bi",
+   "fieldtype": "Data",
+   "label": "BI do Beneficiário"
+  },
+  {
+   "fieldname": "beneficiary_relationship",
+   "fieldtype": "Select",
+   "label": "Relação com o Segurado",
+   "options": "\nPróprio\nCônjuge\nFilho/a\nFamiliar\nAdvogado\nOutro"
+  },
+  {
+   "fieldname": "col_break_beneficiary",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_method",
+   "fieldtype": "Select",
+   "label": "Método de Pagamento da Indemnização",
+   "options": "\nM-Pesa\ne-Mola\nTransferência Bancária\nCheque"
+  },
+  {
+   "fieldname": "mobile_money_number",
+   "fieldtype": "Data",
+   "label": "Número M-Pesa / e-Mola",
+   "depends_on": "eval:['M-Pesa','e-Mola'].includes(doc.payment_method)"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Banco",
+   "depends_on": "eval:['Transferência Bancária','Cheque'].includes(doc.payment_method)"
+  },
+  {
+   "fieldname": "bank_account",
+   "fieldtype": "Data",
+   "label": "Nº de Conta / IBAN",
+   "depends_on": "eval:['Transferência Bancária','Cheque'].includes(doc.payment_method)"
+  },
+  {
+   "fieldname": "section_documents",
+   "fieldtype": "Section Break",
+   "label": "Documentos Suporte"
+  },
+  {
+   "fieldname": "documents",
+   "fieldtype": "Table",
+   "label": "Documentos",
+   "options": "Claim Document",
+   "editable_grid": 1
+  },
+  {
+   "fieldname": "section_analysis",
+   "fieldtype": "Section Break",
+   "label": "Análise e Decisão",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "review_notes",
+   "fieldtype": "Text Editor",
+   "label": "Notas de Análise"
+  },
+  {
+   "fieldname": "approval_notes",
+   "fieldtype": "Text",
+   "label": "Notas de Aprovação",
+   "depends_on": "eval:doc.status == 'Aprovado'"
+  },
+  {
+   "fieldname": "pending_documents_note",
+   "fieldtype": "Text",
+   "label": "Documentos em Falta",
+   "depends_on": "eval:doc.status == 'Pendente Documentação'"
+  },
+  {
+   "fieldname": "rejection_reason",
+   "fieldtype": "Text",
+   "label": "Motivo de Rejeição",
+   "depends_on": "eval:doc.status == 'Rejeitado'"
+  },
+  {
+   "fieldname": "section_dates",
+   "fieldtype": "Section Break",
+   "label": "Histórico de Datas",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "analysis_start_date",
+   "fieldtype": "Date",
+   "label": "Início de Análise",
+   "read_only": 1
+  },
+  {
+   "fieldname": "decision_date",
+   "fieldtype": "Date",
+   "label": "Data de Decisão",
+   "read_only": 1
+  },
+  {
+   "fieldname": "col_break_dates",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "settlement_date",
+   "fieldtype": "Date",
+   "label": "Data de Liquidação",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_settlement",
+   "fieldtype": "Section Break",
+   "label": "Liquidação",
+   "collapsible": 1,
+   "depends_on": "eval:doc.status == 'Liquidado'"
+  },
+  {
+   "fieldname": "settlement_reference",
+   "fieldtype": "Link",
+   "label": "Recibo de Indemnização",
+   "options": "Claim Settlement Receipt",
+   "read_only": 1
+  },
+  {
+   "fieldname": "settlement_entry",
+   "fieldtype": "Link",
+   "label": "Lançamento de Pagamento",
+   "options": "Payment Entry",
+   "read_only": 1
+  }
+ ],
+ "links": [
+  {
+   "group": "Recibo",
+   "link_doctype": "Claim Settlement Receipt",
+   "link_fieldname": "claim"
+  }
+ ],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Insurance Claim",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "policy,customer_full_name,status,claim_type",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "customer_full_name",
+ "track_changes": 1
+}

@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "beneficiary_name",
+  "relationship",
+  "percentage",
+  "col_break_docs",
+  "bi_number",
+  "phone"
+ ],
+ "fields": [
+  {
+   "fieldname": "beneficiary_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Nome do Beneficiário",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "relationship",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Parentesco",
+   "options": "\nCônjuge\nFilho(a)\nPai/Mãe\nIrmão(ã)\nOutro",
+   "reqd": 1
+  },
+  {
+   "fieldname": "percentage",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "% Participação",
+   "reqd": 1,
+   "description": "A soma de todos os beneficiários deve ser 100%"
+  },
+  {
+   "fieldname": "col_break_docs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "bi_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Nº do BI"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Data",
+   "in_grid_view": 1,
+   "label": "Telefone"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Policy Beneficiary",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

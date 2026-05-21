@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:branch_name",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "branch_name",
+  "branch_code",
+  "is_active",
+  "section_description",
+  "description"
+ ],
+ "fields": [
+  {
+   "fieldname": "branch_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Nome do Ramo",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "branch_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Código do Ramo",
+   "description": "Ex: VIDA, AUTO, HABIT, FUN"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1,
+   "label": "Activo"
+  },
+  {
+   "fieldname": "section_description",
+   "fieldtype": "Section Break",
+   "label": "Descrição"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Descrição"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Insurance Branch",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "search_fields": "branch_code",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "branch_name",
+ "track_changes": 1
+}

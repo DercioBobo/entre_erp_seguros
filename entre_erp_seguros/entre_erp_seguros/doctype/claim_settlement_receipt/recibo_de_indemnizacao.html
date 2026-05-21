@@ -1,0 +1,140 @@
+{% set net = doc.net_paid_amount or 0 %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #222; }
+  .page { max-width: 780px; margin: 0 auto; padding: 30px; }
+  .header { background: #F57C00; color: #fff; padding: 22px 28px; border-radius: 4px; margin-bottom: 28px; display: flex; justify-content: space-between; align-items: flex-start; }
+  .header-title { font-size: 18px; font-weight: bold; letter-spacing: 0.5px; }
+  .header-sub { font-size: 12px; opacity: 0.85; margin-top: 4px; }
+  .header-right { text-align: right; }
+  .header-right .label { font-size: 10px; opacity: 0.8; text-transform: uppercase; }
+  .header-right .value { font-size: 15px; font-weight: bold; }
+  .two-col { display: flex; gap: 20px; margin-bottom: 20px; }
+  .card { flex: 1; background: #f7f7f7; border-radius: 4px; padding: 14px 18px; }
+  .card-title { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; font-weight: bold; }
+  .card table { width: 100%; border-collapse: collapse; }
+  .card table td { padding: 3px 0; vertical-align: top; }
+  .card table td:first-child { color: #666; width: 48%; }
+  .values-box { background: #fff8e1; border: 1px solid #ffe082; border-radius: 4px; padding: 18px 20px; margin-bottom: 20px; }
+  .values-box .title { font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; font-weight: bold; }
+  .values-row { display: flex; justify-content: space-between; padding: 4px 0; }
+  .values-row.sub { color: #666; }
+  .values-row.total { border-top: 2px solid #F57C00; margin-top: 8px; padding-top: 10px; font-size: 17px; font-weight: bold; color: #F57C00; }
+  .payment-box { background: #f7f7f7; border-radius: 4px; padding: 14px 18px; margin-bottom: 24px; }
+  .declaration { border: 1px solid #ddd; border-radius: 4px; padding: 18px 20px; font-style: italic; color: #444; line-height: 1.7; margin-bottom: 28px; font-size: 12px; }
+  .signatures { display: flex; gap: 40px; margin-top: 36px; }
+  .sig-block { flex: 1; text-align: center; }
+  .sig-line { border-top: 1px solid #444; margin-bottom: 8px; padding-top: 6px; font-size: 12px; }
+  .sig-sub { font-size: 10px; color: #888; }
+  .footer { margin-top: 36px; padding-top: 12px; border-top: 1px solid #eee; font-size: 10px; color: #aaa; text-align: center; }
+  strong { font-weight: bold; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="header-title">RECIBO DE INDEMNIZAÇÃO DE SINISTRO</div>
+      <div class="header-sub">{{ doc.name }}</div>
+    </div>
+    <div class="header-right">
+      <div class="label">Data de Pagamento</div>
+      <div class="value">{{ frappe.format(doc.payment_date, {'fieldtype':'Date'}) if doc.payment_date else "—" }}</div>
+    </div>
+  </div>
+
+  <!-- Policy + Beneficiary -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">Dados da Apólice e Sinistro</div>
+      <table>
+        <tr><td>Apólice:</td><td><strong>{{ doc.policy or "—" }}</strong></td></tr>
+        <tr><td>Sinistro:</td><td><strong>{{ doc.claim or "—" }}</strong></td></tr>
+        <tr><td>Tipo de Sinistro:</td><td>{{ doc.claim_type or "—" }}</td></tr>
+        <tr><td>Data do Sinistro:</td><td>{{ frappe.format(doc.incident_date, {'fieldtype':'Date'}) if doc.incident_date else "—" }}</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Dados do Beneficiário</div>
+      <table>
+        <tr><td>Nome:</td><td><strong>{{ doc.beneficiary_name or "—" }}</strong></td></tr>
+        <tr><td>BI nº:</td><td>{{ doc.beneficiary_bi or "—" }}</td></tr>
+        <tr><td>Cliente:</td><td>{{ doc.customer or "—" }}</td></tr>
+        <tr><td>Emitido por:</td><td>{{ doc.issued_by or "—" }}</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Values -->
+  <div class="values-box">
+    <div class="title">Valores</div>
+    <div class="values-row sub">
+      <span>Valor Aprovado:</span>
+      <span>{{ frappe.format(doc.approved_amount, {'fieldtype':'Currency'}) }} MT</span>
+    </div>
+    <div class="values-row sub">
+      <span>Franquia (dedução):</span>
+      <span>– {{ frappe.format(doc.deductible_amount or 0, {'fieldtype':'Currency'}) }} MT</span>
+    </div>
+    <div class="values-row total">
+      <span>Valor Líquido Pago:</span>
+      <span>{{ frappe.format(doc.net_paid_amount, {'fieldtype':'Currency'}) }} MT</span>
+    </div>
+  </div>
+
+  <!-- Payment Method -->
+  <div class="payment-box">
+    <div class="card-title">Forma de Pagamento</div>
+    <table style="width:100%;">
+      <tr><td style="width:30%;color:#666;">Método:</td><td><strong>{{ doc.payment_method or "—" }}</strong></td></tr>
+      <tr><td style="color:#666;">Referência:</td><td>{{ doc.payment_reference or "—" }}</td></tr>
+    </table>
+  </div>
+
+  <!-- Declaration -->
+  <div class="declaration">
+    Eu, <strong>{{ doc.beneficiary_name or "________________________________" }}</strong>,
+    portador(a) do Bilhete de Identidade nº <strong>{{ doc.beneficiary_bi or "________________________________" }}</strong>,
+    declaro ter recebido a quantia de
+    <strong>{{ frappe.format(doc.net_paid_amount, {'fieldtype':'Currency'}) }} MT</strong>
+    ({{ frappe.utils.money_in_words(doc.net_paid_amount or 0, "MT") }})
+    referente à indemnização do sinistro <strong>{{ doc.claim }}</strong>,
+    relativo à apólice <strong>{{ doc.policy }}</strong>,
+    em <strong>{{ frappe.format(doc.payment_date, {'fieldtype':'Date'}) if doc.payment_date else "___/___/______" }}</strong>.
+  </div>
+
+  {% if doc.settlement_notes %}
+  <div style="margin-bottom:20px; color:#555; font-size:12px;">
+    <strong>Notas:</strong> {{ doc.settlement_notes }}
+  </div>
+  {% endif %}
+
+  <!-- Signatures -->
+  <div class="signatures">
+    <div class="sig-block">
+      <div class="sig-line">___________________________________</div>
+      <div>Beneficiário / Representante Legal</div>
+      <div class="sig-sub">{{ doc.beneficiary_name or "" }}</div>
+    </div>
+    <div class="sig-block">
+      <div class="sig-line">___________________________________</div>
+      <div>Emissor — Entre Seguros</div>
+      <div class="sig-sub">{{ doc.issued_by or "" }}</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    {{ doc.name }} &nbsp;·&nbsp; {{ frappe.format(doc.payment_date, {'fieldtype':'Date'}) if doc.payment_date else "" }}
+    &nbsp;·&nbsp; Documento emitido electronicamente pelo sistema Entre Seguros
+  </div>
+
+</div>
+</body>
+</html>

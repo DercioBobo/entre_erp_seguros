@@ -1,0 +1,436 @@
+{%- set brand = "#F57C00" -%}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+    color: #212121;
+    background: #fff;
+  }
+
+  .doc-header {
+    background: {{ brand }};
+    color: #fff;
+    padding: 18px 28px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .doc-header .brand-block .company { font-size: 15pt; font-weight: 800; letter-spacing: 1px; }
+  .doc-header .brand-block .tagline  { font-size: 7.5pt; opacity: .85; margin-top: 2px; }
+  .doc-header .doc-title { text-align: right; }
+  .doc-header .doc-title h1 { font-size: 14pt; font-weight: 700; letter-spacing: .5px; }
+  .doc-header .doc-title .ref-num {
+    font-size: 11pt; font-family: monospace;
+    background: rgba(255,255,255,.18);
+    border-radius: 4px; padding: 2px 8px;
+    margin-top: 4px; display: inline-block;
+  }
+
+  .status-row {
+    display: flex; align-items: center;
+    padding: 8px 28px;
+    border-bottom: 2px solid {{ brand }};
+    gap: 10px;
+  }
+  .badge {
+    display: inline-block; padding: 3px 12px;
+    border-radius: 999px; font-size: 8pt; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase;
+  }
+  .badge-blue   { background: #e3f2fd; color: #0d47a1; }
+  .badge-orange { background: #fff3e0; color: #e65100; }
+  .badge-green  { background: #e8f5e9; color: #2e7d32; }
+  .badge-red    { background: #ffebee; color: #c62828; }
+  .badge-grey   { background: #eceff1; color: #546e7a; }
+  .issued-info { font-size: 8pt; color: #616161; margin-left: auto; }
+
+  .doc-body { padding: 18px 28px; }
+
+  .section {
+    margin-bottom: 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .section-title {
+    background: #fafafa;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 6px 14px;
+    font-size: 7.5pt; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: {{ brand }};
+  }
+  .section-body { padding: 12px 14px; }
+
+  .info-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+  .info-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px 20px; }
+  .info-item .lbl { font-size: 7pt; text-transform: uppercase; letter-spacing: .5px; color: #9e9e9e; }
+  .info-item .val { font-size: 9.5pt; font-weight: 600; color: #212121; margin-top: 1px; }
+  .info-item .val.big { font-size: 11pt; color: {{ brand }}; }
+
+  .narrative {
+    font-size: 8.5pt; line-height: 1.7; color: #424242;
+    white-space: pre-wrap; word-break: break-word;
+  }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  th {
+    background: #f5f5f5; border: 1px solid #e0e0e0;
+    padding: 5px 8px; text-align: left;
+    font-size: 7.5pt; text-transform: uppercase;
+    letter-spacing: .5px; color: #616161;
+  }
+  td { border: 1px solid #e0e0e0; padding: 5px 8px; vertical-align: middle; }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  .warning-box {
+    background: #fff8e1; border: 1px solid #ffe082;
+    border-radius: 4px; padding: 8px 12px;
+    font-size: 8pt; color: #6d4c00;
+  }
+
+  .values-box {
+    background: #fff3e0;
+    border: 2px solid {{ brand }};
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+  .values-box .lbl { font-size: 7pt; text-transform: uppercase; color: #9e9e9e; }
+  .values-box .val { font-size: 11pt; font-weight: 700; color: {{ brand }}; }
+
+  .bottom-row {
+    margin-top: 20px;
+    display: flex; justify-content: space-between;
+    gap: 20px;
+  }
+  .signature-block { flex: 1; }
+  .signature-line {
+    border-top: 1px solid #bbb;
+    margin-top: 40px; padding-top: 4px;
+    font-size: 7.5pt; color: #757575; text-align: center;
+  }
+
+  .doc-footer {
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 28px;
+    font-size: 7pt; color: #9e9e9e; text-align: center;
+  }
+
+  @media print {
+    body { font-size: 8.5pt; }
+    .section { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+{%- set status_badge = {
+  "Rascunho": "badge-grey",
+  "Submetido": "badge-blue",
+  "Em Análise": "badge-orange",
+  "Pendente Documentação": "badge-orange",
+  "Aprovado": "badge-green",
+  "Rejeitado": "badge-red",
+  "Em Liquidação": "badge-orange",
+  "Liquidado": "badge-green",
+  "Cancelado": "badge-grey",
+}.get(doc.status, "badge-grey") -%}
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="brand-block">
+    <div class="company">Entre Seguros</div>
+    <div class="tagline">Corretor de Seguros · Moçambique</div>
+  </div>
+  <div class="doc-title">
+    <h1>PARTICIPAÇÃO DE SINISTRO</h1>
+    <div class="ref-num">{{ doc.name }}</div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="status-row">
+  <span class="badge {{ status_badge }}">{{ doc.status }}</span>
+  {%- if doc.submission_date %}
+  <span style="font-size:8pt; color:#616161;">
+    Submetido em {{ frappe.utils.formatdate(doc.submission_date, "dd/MM/yyyy") }}
+  </span>
+  {%- endif %}
+  {%- if doc.analyst %}
+  <span style="font-size:8pt; color:#616161; margin-left:12px;">
+    Analista: {{ doc.analyst }}
+  </span>
+  {%- endif %}
+  <span class="issued-info">Apólice: <strong>{{ doc.policy }}</strong></span>
+</div>
+
+<div class="doc-body">
+
+  <!-- 1. IDENTIFICAÇÃO -->
+  <div class="section">
+    <div class="section-title">Identificação</div>
+    <div class="section-body">
+      <div class="info-grid-3">
+        <div class="info-item">
+          <div class="lbl">Segurado</div>
+          <div class="val">{{ doc.customer_full_name }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Apólice</div>
+          <div class="val">{{ doc.policy }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Ramo</div>
+          <div class="val">{{ doc.branch or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Início de Cobertura</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.coverage_start_date, "dd/MM/yyyy") if doc.coverage_start_date else "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Fim de Cobertura</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.coverage_end_date, "dd/MM/yyyy") if doc.coverage_end_date else "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Capital Segurado</div>
+          <div class="val">MT {{ "{:,.2f}".format(doc.sum_insured or 0) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. OCORRÊNCIA -->
+  <div class="section">
+    <div class="section-title">Dados da Ocorrência</div>
+    <div class="section-body">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="lbl">Data do Sinistro</div>
+          <div class="val big">{{ frappe.utils.formatdate(doc.incident_date, "dd/MM/yyyy") if doc.incident_date else "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Tipo de Sinistro</div>
+          <div class="val">{{ doc.claim_type or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Local</div>
+          <div class="val">{{ doc.incident_location or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Como foi Reportado</div>
+          <div class="val">{{ doc.how_reported or "—" }}</div>
+        </div>
+        {%- if doc.reported_by %}
+        <div class="info-item">
+          <div class="lbl">Reportado por</div>
+          <div class="val">{{ doc.reported_by }} ({{ doc.reported_by_relationship or "—" }})</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Telefone do Declarante</div>
+          <div class="val">{{ doc.reported_by_phone or "—" }}</div>
+        </div>
+        {%- endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. DESCRIÇÃO -->
+  <div class="section">
+    <div class="section-title">Descrição do Sinistro</div>
+    <div class="section-body">
+      <div class="narrative">{{ doc.incident_description | striptags if doc.incident_description else "—" }}</div>
+    </div>
+  </div>
+
+  <!-- 4. AVISO CARÊNCIA -->
+  {%- if doc.is_within_waiting_period %}
+  <div class="warning-box" style="margin-bottom:14px;">
+    <strong>Atenção — Período de Carência:</strong>
+    A data do sinistro está dentro do período de carência definido para este produto.
+    O analista deve avaliar a cobertura aplicável antes de proceder à aprovação.
+  </div>
+  {%- endif %}
+
+  <!-- 5. VALORES -->
+  <div class="section">
+    <div class="section-title">Valores</div>
+    <div class="section-body">
+      <div class="values-box">
+        <div>
+          <div class="lbl">Valor Reclamado</div>
+          <div class="val">MT {{ "{:,.2f}".format(doc.claimed_amount or 0) }}</div>
+        </div>
+        <div>
+          <div class="lbl">Valor Aprovado</div>
+          <div class="val">MT {{ "{:,.2f}".format(doc.approved_amount or 0) }}</div>
+        </div>
+        <div>
+          <div class="lbl">Valor Líquido a Pagar</div>
+          <div class="val">MT {{ "{:,.2f}".format(doc.net_payable_amount or 0) }}</div>
+        </div>
+      </div>
+      {%- if doc.deductible_amount %}
+      <div style="margin-top:8px; font-size:7.5pt; color:#757575;">
+        Franquia deduzida: MT {{ "{:,.2f}".format(doc.deductible_amount) }}
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+
+  <!-- 6. BENEFICIÁRIO / PAGAMENTO -->
+  {%- if doc.beneficiary_name %}
+  <div class="section">
+    <div class="section-title">Beneficiário e Forma de Pagamento</div>
+    <div class="section-body">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="lbl">Nome do Beneficiário</div>
+          <div class="val">{{ doc.beneficiary_name }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Relação com o Segurado</div>
+          <div class="val">{{ doc.beneficiary_relationship or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">BI do Beneficiário</div>
+          <div class="val">{{ doc.beneficiary_bi or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Método de Pagamento</div>
+          <div class="val">{{ doc.payment_method or "—" }}</div>
+        </div>
+        {%- if doc.mobile_money_number %}
+        <div class="info-item">
+          <div class="lbl">Número M-Pesa / e-Mola</div>
+          <div class="val">{{ doc.mobile_money_number }}</div>
+        </div>
+        {%- endif %}
+        {%- if doc.bank_name %}
+        <div class="info-item">
+          <div class="lbl">Banco / Conta</div>
+          <div class="val">{{ doc.bank_name }}{% if doc.bank_account %} — {{ doc.bank_account }}{% endif %}</div>
+        </div>
+        {%- endif %}
+      </div>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 7. DOCUMENTOS -->
+  {%- if doc.documents %}
+  <div class="section">
+    <div class="section-title">Documentos de Suporte</div>
+    <div class="section-body">
+      <table>
+        <thead>
+          <tr>
+            <th>Tipo de Documento</th>
+            <th style="text-align:center;">Recebido</th>
+            <th style="text-align:center;">Obrigatório</th>
+            <th>Data de Recepção</th>
+            <th>Notas</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for d in doc.documents %}
+          <tr>
+            <td>{{ d.document_type }}</td>
+            <td style="text-align:center;">{{ "Sim" if d.is_received else "Não" }}</td>
+            <td style="text-align:center;">{{ "Sim" if d.is_mandatory else "Não" }}</td>
+            <td>{{ frappe.utils.formatdate(d.received_date, "dd/MM/yyyy") if d.received_date else "—" }}</td>
+            <td>{{ d.notes or "—" }}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 8. NOTAS DE ANÁLISE / DECISÃO -->
+  {%- if doc.review_notes or doc.approval_notes or doc.rejection_reason or doc.pending_documents_note %}
+  <div class="section">
+    <div class="section-title">Análise e Decisão</div>
+    <div class="section-body">
+      {%- if doc.review_notes %}
+      <div style="margin-bottom:8px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#9e9e9e; letter-spacing:.5px; margin-bottom:3px;">Notas de Análise</div>
+        <div class="narrative">{{ doc.review_notes | striptags }}</div>
+      </div>
+      {%- endif %}
+      {%- if doc.approval_notes %}
+      <div style="margin-bottom:8px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#9e9e9e; letter-spacing:.5px; margin-bottom:3px;">Notas de Aprovação</div>
+        <div class="narrative">{{ doc.approval_notes }}</div>
+      </div>
+      {%- endif %}
+      {%- if doc.rejection_reason %}
+      <div style="background:#ffebee; border:1px solid #ef9a9a; border-radius:4px; padding:8px 12px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#c62828; letter-spacing:.5px; margin-bottom:3px;">Motivo de Rejeição</div>
+        <div style="font-size:8.5pt; color:#c62828;">{{ doc.rejection_reason }}</div>
+      </div>
+      {%- endif %}
+      {%- if doc.pending_documents_note %}
+      <div class="warning-box" style="margin-top:6px;">
+        <div style="font-size:7pt; text-transform:uppercase; color:#6d4c00; letter-spacing:.5px; margin-bottom:3px;">Documentos em Falta</div>
+        {{ doc.pending_documents_note }}
+      </div>
+      {%- endif %}
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 9. LIQUIDAÇÃO -->
+  {%- if doc.status == "Liquidado" and doc.settlement_reference %}
+  <div class="section">
+    <div class="section-title">Liquidação</div>
+    <div class="section-body">
+      <div class="info-grid-3">
+        <div class="info-item">
+          <div class="lbl">Data de Liquidação</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.settlement_date, "dd/MM/yyyy") if doc.settlement_date else "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Recibo de Indemnização</div>
+          <div class="val">{{ doc.settlement_reference }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Lançamento de Pagamento</div>
+          <div class="val">{{ doc.settlement_entry or "—" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 10. ASSINATURAS -->
+  <div class="bottom-row">
+    <div class="signature-block">
+      <div class="signature-line">Segurado / Declarante</div>
+    </div>
+    <div class="signature-block">
+      <div class="signature-line">Analista Responsável</div>
+    </div>
+    <div class="signature-block">
+      <div class="signature-line">Aprovação / Chefia</div>
+    </div>
+  </div>
+
+</div><!-- /doc-body -->
+
+<!-- FOOTER -->
+<div class="doc-footer">
+  Participação de Sinistro {{ doc.name }} · Apólice {{ doc.policy }} · Gerado em {{ frappe.utils.formatdate(frappe.utils.nowdate(), "dd/MM/yyyy") }} pelo sistema Entre Seguros.
+  Documento confidencial — para uso interno.
+</div>
+
+</body>
+</html>

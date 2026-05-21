@@ -1,0 +1,2 @@
+# Patches for entre_erp_seguros
+# Format: entre_erp_seguros.patches.patch_module.execute

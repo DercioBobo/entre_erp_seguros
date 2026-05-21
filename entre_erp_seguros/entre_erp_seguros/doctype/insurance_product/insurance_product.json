@@ -1,0 +1,218 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "PROD-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "product_name",
+  "status",
+  "is_active",
+  "col_break_header",
+  "branch",
+  "risk_factor_template",
+  "section_limits",
+  "min_age",
+  "max_age",
+  "waiting_period_days",
+  "col_break_limits",
+  "min_term_months",
+  "max_term_months",
+  "section_capital",
+  "min_sum_insured",
+  "max_sum_insured",
+  "section_coverages",
+  "coverages",
+  "section_acceptance",
+  "acceptance_rules",
+  "section_conditions",
+  "general_conditions",
+  "col_break_conditions",
+  "special_conditions"
+ ],
+ "fields": [
+  {
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Nome do Produto",
+   "reqd": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Estado",
+   "options": "Rascunho\nActivo\nDescontinuado",
+   "default": "Rascunho"
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1,
+   "label": "Activo"
+  },
+  {
+   "fieldname": "col_break_header",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Ramo",
+   "options": "Insurance Branch",
+   "reqd": 1
+  },
+  {
+   "fieldname": "risk_factor_template",
+   "fieldtype": "Link",
+   "label": "Template de Factores de Risco",
+   "options": "Risk Factor Template"
+  },
+  {
+   "fieldname": "section_limits",
+   "fieldtype": "Section Break",
+   "label": "Limites de Aceitação",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "min_age",
+   "fieldtype": "Int",
+   "label": "Idade Mínima",
+   "default": "18",
+   "description": "Anos completos"
+  },
+  {
+   "fieldname": "max_age",
+   "fieldtype": "Int",
+   "label": "Idade Máxima",
+   "default": "65"
+  },
+  {
+   "fieldname": "waiting_period_days",
+   "fieldtype": "Int",
+   "label": "Período de Carência (dias)",
+   "default": "0",
+   "description": "Dias após activação da apólice em que certos sinistros podem não ser cobertos."
+  },
+  {
+   "fieldname": "col_break_limits",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "min_term_months",
+   "fieldtype": "Int",
+   "label": "Prazo Mínimo (meses)"
+  },
+  {
+   "fieldname": "max_term_months",
+   "fieldtype": "Int",
+   "label": "Prazo Máximo (meses)"
+  },
+  {
+   "fieldname": "section_capital",
+   "fieldtype": "Section Break",
+   "label": "Limites de Capital",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "min_sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Mínimo Segurável (MT)"
+  },
+  {
+   "fieldname": "max_sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Máximo Segurável (MT)"
+  },
+  {
+   "fieldname": "section_coverages",
+   "fieldtype": "Section Break",
+   "label": "Coberturas"
+  },
+  {
+   "fieldname": "coverages",
+   "fieldtype": "Table",
+   "label": "Coberturas do Produto",
+   "options": "Product Coverage Item",
+   "editable_grid": 1
+  },
+  {
+   "fieldname": "section_acceptance",
+   "fieldtype": "Section Break",
+   "label": "Regras de Aceitação",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "acceptance_rules",
+   "fieldtype": "Table",
+   "label": "Regras de Aceitação",
+   "options": "Acceptance Rule Item",
+   "editable_grid": 1
+  },
+  {
+   "fieldname": "section_conditions",
+   "fieldtype": "Section Break",
+   "label": "Condições",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "general_conditions",
+   "fieldtype": "Text Editor",
+   "label": "Condições Gerais"
+  },
+  {
+   "fieldname": "col_break_conditions",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "special_conditions",
+   "fieldtype": "Text Editor",
+   "label": "Condições Especiais"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Insurance Product",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "All",
+   "share": 1
+  }
+ ],
+ "search_fields": "product_name,branch",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "product_name",
+ "track_changes": 1
+}

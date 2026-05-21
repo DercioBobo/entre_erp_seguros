@@ -1,0 +1,280 @@
+{%- set brand = "#F57C00" -%}
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+    color: #212121;
+    background: #fff;
+  }
+
+  .doc-header {
+    background: {{ brand }};
+    color: #fff;
+    padding: 16px 28px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .doc-header .brand-block .company { font-size: 14pt; font-weight: 800; }
+  .doc-header .brand-block .tagline  { font-size: 7.5pt; opacity: .85; margin-top: 2px; }
+  .doc-header .doc-title { text-align: right; }
+  .doc-header .doc-title h1 { font-size: 13pt; font-weight: 700; }
+  .doc-header .doc-title .qt-num {
+    font-family: monospace; font-size: 10pt;
+    background: rgba(255,255,255,.18);
+    border-radius: 4px; padding: 2px 8px; margin-top: 4px;
+    display: inline-block;
+  }
+
+  .status-row {
+    display: flex; align-items: center;
+    padding: 7px 28px;
+    border-bottom: 2px solid {{ brand }};
+    gap: 10px;
+  }
+  .badge {
+    display: inline-block; padding: 3px 12px; border-radius: 999px;
+    font-size: 8pt; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+  }
+  .badge-green  { background: #e8f5e9; color: #2e7d32; }
+  .badge-orange { background: #fff3e0; color: #e65100; }
+  .badge-red    { background: #ffebee; color: #c62828; }
+  .badge-grey   { background: #eceff1; color: #546e7a; }
+  .qt-date { font-size: 8pt; color: #616161; margin-left: auto; }
+
+  .doc-body { padding: 16px 28px; }
+
+  .section { margin-bottom: 14px; border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; }
+  .section-title {
+    background: #fafafa; border-bottom: 1px solid #e0e0e0;
+    padding: 5px 14px; font-size: 7.5pt; font-weight: 700;
+    letter-spacing: 1px; text-transform: uppercase; color: {{ brand }};
+  }
+  .section-body { padding: 10px 14px; }
+
+  .info-grid   { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 24px; }
+  .info-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px 20px; }
+  .info-item .lbl { font-size: 7pt; text-transform: uppercase; letter-spacing: .5px; color: #9e9e9e; }
+  .info-item .val { font-size: 9pt; font-weight: 600; margin-top: 1px; }
+  .info-item .val.big { font-size: 12pt; color: {{ brand }}; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
+  th { background: #f5f5f5; border: 1px solid #e0e0e0; padding: 5px 8px; font-size: 7.5pt; text-transform: uppercase; color: #616161; }
+  td { border: 1px solid #e0e0e0; padding: 5px 8px; }
+  tr:nth-child(even) td { background: #fafafa; }
+
+  .validity-box {
+    background: #fff8e1;
+    border: 1px solid #ffe082;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 8pt;
+    color: #795548;
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .bottom-row { margin-top: 16px; display: flex; justify-content: space-between; gap: 20px; }
+  .signature-block { flex: 1; }
+  .signature-line {
+    border-top: 1px solid #bbb; margin-top: 36px;
+    padding-top: 4px; font-size: 7.5pt; color: #757575; text-align: center;
+  }
+
+  .doc-footer {
+    border-top: 1px solid #e0e0e0; padding: 7px 28px;
+    font-size: 7pt; color: #9e9e9e; text-align: center;
+  }
+
+  @media print { .section { page-break-inside: avoid; } }
+</style>
+</head>
+<body>
+
+{%- set acc_badge = {
+  "Aceite": "badge-green",
+  "Aceite com Carregamento": "badge-orange",
+  "Pendente de Revisão": "badge-orange",
+  "Recusado": "badge-red",
+}.get(doc.acceptance_status, "badge-grey") -%}
+
+<!-- HEADER -->
+<div class="doc-header">
+  <div class="brand-block">
+    <div class="company">Entre Seguros</div>
+    <div class="tagline">Corretor de Seguros · Moçambique</div>
+  </div>
+  <div class="doc-title">
+    <h1>COTAÇÃO DE SEGURO</h1>
+    <div class="qt-num">{{ doc.name }}</div>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div class="status-row">
+  <span class="badge {{ acc_badge }}">
+    {{ doc.acceptance_status or "Por calcular" }}
+  </span>
+  <span class="qt-date">
+    Gerada em {{ frappe.utils.formatdate(doc.modified, "dd/MM/yyyy") }}
+  </span>
+</div>
+
+<div class="doc-body">
+
+  <!-- 1. DADOS DO POTENCIAL SEGURADO -->
+  <div class="section">
+    <div class="section-title">Dados do Potencial Segurado</div>
+    <div class="section-body">
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="lbl">Nome</div>
+          <div class="val">{{ doc.customer_full_name or doc.customer }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Data de Nascimento / Idade</div>
+          <div class="val">
+            {{ frappe.utils.formatdate(doc.customer_dob, "dd/MM/yyyy") if doc.customer_dob else "—" }}
+            {%- if doc.customer_age %} ({{ doc.customer_age }} anos){%- endif %}
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">BI</div>
+          <div class="val">{{ doc.customer_bi or "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Telefone</div>
+          <div class="val">{{ doc.customer_phone or "—" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. PRODUTO -->
+  <div class="section">
+    <div class="section-title">Produto e Cobertura</div>
+    <div class="section-body">
+      <div class="info-grid-3">
+        <div class="info-item">
+          <div class="lbl">Produto</div>
+          <div class="val">{{ doc.insurance_product }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Ramo</div>
+          <div class="val">{{ doc.branch }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Prazo</div>
+          <div class="val">{{ doc.term_months }} meses</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Capital Segurado</div>
+          <div class="val big">MT {{ "{:,.2f}".format(doc.sum_insured or 0) }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Início de Cobertura</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.coverage_start_date, "dd/MM/yyyy") if doc.coverage_start_date else "—" }}</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Fim de Cobertura</div>
+          <div class="val">{{ frappe.utils.formatdate(doc.coverage_end_date, "dd/MM/yyyy") if doc.coverage_end_date else "—" }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. CÁLCULO DO PRÉMIO -->
+  {%- if doc.premium_amount %}
+  <div class="section">
+    <div class="section-title">Cálculo do Prémio</div>
+    <div class="section-body">
+      <div class="info-grid-3">
+        <div class="info-item">
+          <div class="lbl">Taxa Base</div>
+          <div class="val">{{ "%.4f"|format(doc.base_rate_pct or 0) }}%</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Carregamentos</div>
+          <div class="val">+{{ "%.2f"|format(doc.total_loading_pct or 0) }}%</div>
+        </div>
+        <div class="info-item">
+          <div class="lbl">Taxa Final</div>
+          <div class="val">{{ "%.4f"|format(doc.final_rate_pct or 0) }}%</div>
+        </div>
+      </div>
+      <div style="margin-top:12px; padding:10px 14px; background:#fff3e0; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:9pt; color:#616161;">Prémio Total Calculado</span>
+        <span style="font-size:15pt; font-weight:800; color:{{ brand }};">
+          MT {{ "{:,.2f}".format(doc.premium_amount) }}
+        </span>
+      </div>
+      {%- if doc.premium_breakdown %}
+      <pre style="margin-top:10px; font-size:7.5pt; color:#616161; white-space:pre-wrap; font-family:monospace;">{{ doc.premium_breakdown }}</pre>
+      {%- endif %}
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 4. FACTORES DE RISCO -->
+  {%- if doc.risk_factors_json and doc.risk_factors_json != '{}' %}
+  <div class="section">
+    <div class="section-title">Factores de Risco Declarados</div>
+    <div class="section-body">
+      {%- set answers = frappe.parse_json(doc.risk_factors_json) %}
+      <table>
+        <thead>
+          <tr><th>Factor</th><th>Resposta</th></tr>
+        </thead>
+        <tbody>
+          {%- for key, val in answers.items() %}
+          <tr>
+            <td>{{ key }}</td>
+            <td>{{ val }}</td>
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- 5. RECUSA (if applicable) -->
+  {%- if doc.acceptance_status == "Recusado" and doc.refusal_reason %}
+  <div class="section" style="border-color:#ffcdd2;">
+    <div class="section-title" style="color:#c62828; background:#fff5f5;">Motivo de Recusa</div>
+    <div class="section-body" style="color:#c62828;">
+      <div style="white-space:pre-line;">{{ doc.refusal_reason }}</div>
+    </div>
+  </div>
+  {%- endif %}
+
+  <!-- ASSINATURA -->
+  <div class="bottom-row">
+    <div class="signature-block">
+      <div class="signature-line">Potencial Segurado — Assinatura e Data</div>
+    </div>
+    <div class="signature-block">
+      <div class="signature-line">Corretor / Agente</div>
+    </div>
+  </div>
+
+  <!-- VALIDADE -->
+  <div class="validity-box">
+    ⚠ Esta cotação é válida por <strong>30 dias</strong> a partir da data de emissão.
+    Sujeita a aceitação final pela seguradora. Os valores apresentados são indicativos.
+  </div>
+
+</div><!-- /doc-body -->
+
+<div class="doc-footer">
+  Entre Seguros · Sistema de Gestão de Seguros · Moçambique
+</div>
+
+</body>
+</html>

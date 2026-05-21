@@ -1,0 +1,152 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "PRT-.YYYY.-.#####",
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "rate_name",
+  "product",
+  "is_active",
+  "base_rate_pct",
+  "section_age",
+  "min_age",
+  "max_age",
+  "col_break_age",
+  "min_term_months",
+  "max_term_months",
+  "section_vehicle",
+  "min_vehicle_year",
+  "max_vehicle_year",
+  "section_capital",
+  "min_sum_insured",
+  "max_sum_insured"
+ ],
+ "fields": [
+  {
+   "fieldname": "rate_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Descrição da Taxa",
+   "bold": 1,
+   "description": "Ex: Idade 26-35, 12-24 meses"
+  },
+  {
+   "fieldname": "product",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Produto",
+   "options": "Insurance Product",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "default": "1",
+   "in_list_view": 1,
+   "label": "Activa"
+  },
+  {
+   "fieldname": "base_rate_pct",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Taxa Base (%)",
+   "reqd": 1,
+   "description": "Ex: 0.60 representa 0,60% do capital seguro",
+   "precision": "4"
+  },
+  {
+   "fieldname": "section_age",
+   "fieldtype": "Section Break",
+   "label": "Faixas de Idade e Prazo",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "min_age",
+   "fieldtype": "Int",
+   "label": "Idade Mínima (anos)"
+  },
+  {
+   "fieldname": "max_age",
+   "fieldtype": "Int",
+   "label": "Idade Máxima (anos)"
+  },
+  {
+   "fieldname": "col_break_age",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "min_term_months",
+   "fieldtype": "Int",
+   "label": "Prazo Mínimo (meses)"
+  },
+  {
+   "fieldname": "max_term_months",
+   "fieldtype": "Int",
+   "label": "Prazo Máximo (meses)"
+  },
+  {
+   "fieldname": "section_vehicle",
+   "fieldtype": "Section Break",
+   "label": "Faixas de Veículo (AUTO)",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "min_vehicle_year",
+   "fieldtype": "Int",
+   "label": "Ano Mínimo do Veículo"
+  },
+  {
+   "fieldname": "max_vehicle_year",
+   "fieldtype": "Int",
+   "label": "Ano Máximo do Veículo"
+  },
+  {
+   "fieldname": "section_capital",
+   "fieldtype": "Section Break",
+   "label": "Faixas de Capital Segurado",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "min_sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Mínimo (MT)"
+  },
+  {
+   "fieldname": "max_sum_insured",
+   "fieldtype": "Currency",
+   "label": "Capital Máximo (MT)"
+  }
+ ],
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Premium Rate Table",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "rate_name,product",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "rate_name",
+ "track_changes": 1
+}

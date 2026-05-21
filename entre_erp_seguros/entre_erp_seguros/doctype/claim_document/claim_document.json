@@ -1,0 +1,83 @@
+{
+ "actions": [],
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "document_type",
+  "document_description",
+  "is_mandatory",
+  "col_break_status",
+  "is_received",
+  "received_date",
+  "file",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Tipo de Documento",
+   "reqd": 1,
+   "options": "\nCertidão de Óbito\nRelatório Médico\nBoletim de Ocorrência Policial\nOrçamento de Reparação\nFactura\nRelatório de Vistoria\nDeclaração do Segurado\nBI / Passaporte\nComprovativo de NUIT\nFotografias\nOutro"
+  },
+  {
+   "fieldname": "document_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Descrição"
+  },
+  {
+   "fieldname": "is_mandatory",
+   "fieldtype": "Check",
+   "in_grid_view": 1,
+   "label": "Obrigatório"
+  },
+  {
+   "fieldname": "col_break_status",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_received",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Recebido",
+   "default": "0"
+  },
+  {
+   "fieldname": "received_date",
+   "fieldtype": "Date",
+   "in_grid_view": 1,
+   "label": "Data de Recepção",
+   "depends_on": "eval:doc.is_received"
+  },
+  {
+   "fieldname": "file",
+   "fieldtype": "Attach",
+   "in_grid_view": 1,
+   "label": "Ficheiro"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Data",
+   "label": "Notas"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Claim Document",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

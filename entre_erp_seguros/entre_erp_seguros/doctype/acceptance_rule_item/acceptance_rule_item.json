@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "creation": "2026-05-21 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "rule_description",
+  "field_to_check",
+  "condition",
+  "action",
+  "loading_pct"
+ ],
+ "fields": [
+  {
+   "fieldname": "rule_description",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Descrição da Regra",
+   "bold": 1
+  },
+  {
+   "fieldname": "field_to_check",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Campo a Verificar",
+   "description": "fieldname do Risk Factor Item"
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Condição",
+   "description": "Ex: value > 65  /  value == 'Mining'"
+  },
+  {
+   "fieldname": "action",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "Acção",
+   "options": "\nRecusar\nMarcar para Revisão\nAplicar Carregamento",
+   "reqd": 1
+  },
+  {
+   "fieldname": "loading_pct",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "in_grid_view": 1,
+   "label": "% Carregamento",
+   "depends_on": "eval:doc.action == 'Aplicar Carregamento'",
+   "description": "Percentagem a aplicar sobre a taxa base"
+  }
+ ],
+ "istable": 1,
+ "links": [],
+ "modified": "2026-05-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Entre Erp Seguros",
+ "name": "Acceptance Rule Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0
+}

@@ -1,0 +1,106 @@
+[
+  {
+    "doctype": "Risk Factor Template",
+    "template_name": "Template VIDA",
+    "branch": "Vida/Crédito",
+    "description": "Factores de risco para seguros de vida e crédito.",
+    "is_active": 1,
+    "risk_factor_items": [
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Fumador",
+        "fieldname": "smoker",
+        "field_type": "Check",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value == true\", \"loading_pct\": 15}]"
+      },
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Doença Crónica",
+        "fieldname": "chronic_disease",
+        "field_type": "Check",
+        "is_mandatory": 1,
+        "can_refuse": 1,
+        "refusal_condition": "value == true",
+        "loading_logic": "[{\"condition\": \"value == true\", \"loading_pct\": 30}]"
+      },
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Profissão de Risco",
+        "fieldname": "dangerous_profession",
+        "field_type": "Select",
+        "select_options": "Escritório\nCampo\nMineração\nPesca",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value == 'Mineração'\", \"loading_pct\": 25}, {\"condition\": \"value == 'Pesca'\", \"loading_pct\": 20}]"
+      }
+    ]
+  },
+  {
+    "doctype": "Risk Factor Template",
+    "template_name": "Template AUTO",
+    "branch": "Automóvel",
+    "description": "Factores de risco para seguros automóvel.",
+    "is_active": 1,
+    "risk_factor_items": [
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Ano do Veículo",
+        "fieldname": "vehicle_year",
+        "field_type": "Int",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value < 2010\", \"loading_pct\": 25}]"
+      },
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Utilização do Veículo",
+        "fieldname": "vehicle_use",
+        "field_type": "Select",
+        "select_options": "Pessoal\nComercial\nTáxi",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value == 'Táxi'\", \"loading_pct\": 40}, {\"condition\": \"value == 'Comercial'\", \"loading_pct\": 15}]"
+      },
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Idade do Condutor Principal",
+        "fieldname": "main_driver_age",
+        "field_type": "Int",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value < 25\", \"loading_pct\": 20}, {\"condition\": \"value > 70\", \"loading_pct\": 30}]"
+      }
+    ]
+  },
+  {
+    "doctype": "Risk Factor Template",
+    "template_name": "Template HABITAÇÃO",
+    "branch": "Habitação",
+    "description": "Factores de risco para seguros de habitação.",
+    "is_active": 1,
+    "risk_factor_items": [
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Material de Construção",
+        "fieldname": "construction_material",
+        "field_type": "Select",
+        "select_options": "Betão\nMadeira\nMisto",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value == 'Madeira'\", \"loading_pct\": 30}, {\"condition\": \"value == 'Misto'\", \"loading_pct\": 15}]"
+      },
+      {
+        "doctype": "Risk Factor Item",
+        "factor_label": "Zona de Localização",
+        "fieldname": "location_zone",
+        "field_type": "Select",
+        "select_options": "Urbana\nSuburbana\nRural\nZona de Cheias",
+        "is_mandatory": 1,
+        "can_refuse": 0,
+        "loading_logic": "[{\"condition\": \"value == 'Zona de Cheias'\", \"loading_pct\": 50}, {\"condition\": \"value == 'Rural'\", \"loading_pct\": 10}]"
+      }
+    ]
+  }
+]

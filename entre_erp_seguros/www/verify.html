@@ -1,0 +1,202 @@
+{% extends "templates/web.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head_include %}
+<style>
+  :root {
+    --brand: #F57C00;
+    --brand-light: #FFF3E0;
+    --text: #212121;
+    --muted: #757575;
+    --success: #2e7d32;
+    --radius: 12px;
+  }
+
+  body {
+    background: #f5f5f5;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    color: var(--text);
+  }
+
+  .verify-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+  }
+
+  .verify-card {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    width: 100%;
+    max-width: 560px;
+    overflow: hidden;
+  }
+
+  .verify-header {
+    background: var(--brand);
+    color: #fff;
+    padding: 2rem 2rem 1.5rem;
+    text-align: center;
+  }
+
+  .verify-header .brand {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 0.5rem;
+  }
+
+  .verify-header h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .verify-header .policy-num {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-top: 0.3rem;
+    font-family: monospace;
+    letter-spacing: 1px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.35rem 1.2rem;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #fff;
+    color: var(--brand);
+  }
+
+  .verify-body {
+    padding: 2rem;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 1rem;
+  }
+
+  .info-row:last-child {
+    border-bottom: none;
+  }
+
+  .info-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .info-value {
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: right;
+  }
+
+  .verify-footer {
+    background: #fafafa;
+    border-top: 1px solid #eee;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .verify-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .error-card {
+    text-align: center;
+    padding: 3rem 2rem;
+  }
+
+  .error-card h2 {
+    color: #c62828;
+    margin-bottom: 0.5rem;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="verify-wrapper">
+  <div class="verify-card">
+
+    {% if error %}
+      <div class="verify-header">
+        <div class="brand">Entre Seguros</div>
+        <h1>Verificação de Apólice</h1>
+      </div>
+      <div class="error-card">
+        <div class="verify-icon">⚠️</div>
+        <h2>Apólice não encontrada</h2>
+        <p>{{ error }}</p>
+      </div>
+
+    {% else %}
+      <div class="verify-header">
+        <div class="brand">Entre Seguros · Verificação Autêntica</div>
+        <h1>✓ Apólice Verificada</h1>
+        <div class="policy-num">{{ policy.policy_number }}</div>
+        <div class="status-badge" style="color: {{ status_color }};">
+          {{ policy.policy_status }}
+        </div>
+      </div>
+
+      <div class="verify-body">
+        <div class="info-row">
+          <span class="info-label">Segurado</span>
+          <span class="info-value">{{ policy.customer_full_name }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Produto</span>
+          <span class="info-value">{{ policy.insurance_product }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Ramo</span>
+          <span class="info-value">{{ policy.branch }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Capital Seguro</span>
+          <span class="info-value">
+            MT {{ "{:,.2f}".format(policy.sum_insured or 0).replace(",", ".") }}
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Início de Cobertura</span>
+          <span class="info-value">{{ formatted_start }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Fim de Cobertura</span>
+          <span class="info-value">{{ formatted_end }}</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Data de Emissão</span>
+          <span class="info-value">{{ formatted_issued }}</span>
+        </div>
+      </div>
+
+      <div class="verify-footer">
+        Este documento foi verificado electronicamente pelo sistema Entre Seguros.<br>
+        Qualquer alteração torna este documento inválido.
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}
