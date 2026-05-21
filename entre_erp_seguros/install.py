@@ -7,6 +7,7 @@ from frappe.custom.doctype.custom_field.custom_field import create_custom_fields
 def after_install():
     _create_customer_custom_fields()
     _ensure_customer_age_field()
+    _create_insurance_branches()       # must run before products
     _create_sample_products_and_rates()
     _create_print_formats()
     _create_mode_of_payments()
@@ -122,6 +123,48 @@ def _ensure_customer_age_field():
 
 
 # ------------------------------------------------------------------
+# Insurance Branches (must exist before products are created)
+# ------------------------------------------------------------------
+
+def _create_insurance_branches():
+    """
+    Idempotently creates the four core insurance branches.
+    Also created by fixtures; this runs first so products can reference them.
+    """
+    branches = [
+        {
+            "name": "Vida/Crédito",
+            "branch_code": "VIDA",
+            "description": "Seguros de vida, crédito e acidentes pessoais.",
+        },
+        {
+            "name": "Automóvel",
+            "branch_code": "AUTO",
+            "description": "Seguros para veículos automóveis, motociclos e veículos comerciais.",
+        },
+        {
+            "name": "Habitação",
+            "branch_code": "HABIT",
+            "description": "Seguros para imóveis residenciais e conteúdos domésticos.",
+        },
+        {
+            "name": "Funeral",
+            "branch_code": "FUN",
+            "description": "Seguros de assistência funeral e despesas associadas.",
+        },
+    ]
+    for b in branches:
+        if frappe.db.exists("Insurance Branch", b["name"]):
+            continue
+        doc = frappe.new_doc("Insurance Branch")
+        doc.branch_name = b["name"]
+        doc.branch_code = b["branch_code"]
+        doc.description = b["description"]
+        doc.is_active = 1
+        doc.insert(ignore_permissions=True)
+
+
+# ------------------------------------------------------------------
 # Sample Insurance Products + Premium Rate Tables
 # ------------------------------------------------------------------
 
@@ -220,7 +263,7 @@ def _create_sample_products_and_rates():
             "status": cfg["status"],
             "is_active": 1,
         })
-        product.insert(ignore_permissions=True)
+        product.insert(ignore_permissions=True, ignore_links=True)
 
         # Create rate table entries for this product
         for rate_cfg in cfg.get("rates", []):

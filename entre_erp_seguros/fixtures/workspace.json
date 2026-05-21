@@ -9,7 +9,7 @@
     "is_standard": 1,
     "public": 1,
     "sequence_id": 1,
-    "content": "[{\"id\":\"card-overview\",\"type\":\"card\",\"data\":{\"card_name\":\"Visão Geral\",\"col\":4}},{\"id\":\"card-transacoes\",\"type\":\"card\",\"data\":{\"card_name\":\"Transacções\",\"col\":4}},{\"id\":\"card-config\",\"type\":\"card\",\"data\":{\"card_name\":\"Configuração\",\"col\":4}}]",
+    "content": "[]",
     "shortcuts": [
       {
         "doctype": "Workspace Shortcut",
@@ -59,7 +59,7 @@
       {
         "doctype": "Workspace Shortcut",
         "type": "DocType",
-        "label": "Recibos de Indemnização",
+        "label": "Recibos",
         "link_to": "Claim Settlement Receipt",
         "icon": "file-text",
         "color": "#2e7d32",
@@ -73,125 +73,6 @@
         "icon": "package",
         "color": "#6a1b9a",
         "idx": 7
-      }
-    ],
-    "links": [
-      {
-        "doctype": "Workspace Link",
-        "type": "Card Break",
-        "label": "Visão Geral",
-        "hidden": 0,
-        "idx": 1
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "Page",
-        "label": "Dashboard de Seguros",
-        "link_to": "seguro-dashboard",
-        "hidden": 0,
-        "idx": 2
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "Card Break",
-        "label": "Transacções",
-        "hidden": 0,
-        "idx": 3
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Cotação de Seguro",
-        "link_to": "Insurance Quotation",
-        "hidden": 0,
-        "idx": 4
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Apólice de Seguro",
-        "link_to": "Insurance Policy",
-        "hidden": 0,
-        "idx": 5
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Pagamento de Prémio",
-        "link_to": "Premium Payment",
-        "hidden": 0,
-        "idx": 6
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Sinistro",
-        "link_to": "Insurance Claim",
-        "hidden": 0,
-        "idx": 7
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Endosso",
-        "link_to": "Policy Endorsement",
-        "hidden": 0,
-        "idx": 8
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Recibo de Indemnização",
-        "link_to": "Claim Settlement Receipt",
-        "hidden": 0,
-        "idx": 9
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "Card Break",
-        "label": "Configuração",
-        "hidden": 0,
-        "idx": 10
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Produto de Seguro",
-        "link_to": "Insurance Product",
-        "hidden": 0,
-        "idx": 11
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Tabela de Taxas",
-        "link_to": "Premium Rate Table",
-        "hidden": 0,
-        "idx": 12
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Template de Factores de Risco",
-        "link_to": "Risk Factor Template",
-        "hidden": 0,
-        "idx": 13
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Tipo de Cobertura",
-        "link_to": "Coverage Type",
-        "hidden": 0,
-        "idx": 14
-      },
-      {
-        "doctype": "Workspace Link",
-        "type": "DocType",
-        "label": "Ramo de Seguro",
-        "link_to": "Insurance Branch",
-        "hidden": 0,
-        "idx": 15
       }
     ]
   }
