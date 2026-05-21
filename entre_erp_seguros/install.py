@@ -12,6 +12,7 @@ def after_install():
     _create_print_formats()
     _create_mode_of_payments()
     _create_insurance_item()
+    _create_workspace()
     frappe.db.commit()
 
 
@@ -415,3 +416,43 @@ def _create_insurance_item():
         "description": "Prémio de seguro — gerado automaticamente pelo sistema.",
     })
     item.insert(ignore_permissions=True)
+
+
+# ------------------------------------------------------------------
+# Workspace
+# ------------------------------------------------------------------
+
+def _create_workspace():
+    """
+    Creates the Seguros workspace with shortcuts.
+    Bypasses mandatory/link validation so child-table quirks in different
+    Frappe v15 patch levels don't block installation.
+    Idempotent — skips if the workspace already exists.
+    """
+    if frappe.db.exists("Workspace", "Seguros"):
+        return
+
+    ws = frappe.new_doc("Workspace")
+    ws.update({
+        "name": "Seguros",
+        "title": "Seguros",
+        "module": "Entre Erp Seguros",
+        "icon": "shield",
+        "indicator_color": "orange",
+        "is_standard": 1,
+        "public": 1,
+        "sequence_id": 1.0,
+        "content": "[]",
+    })
+
+    for s in [
+        {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
+        {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
+        {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
+        {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
+        {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
+        {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
+    ]:
+        ws.append("shortcuts", s)
+
+    ws.insert(ignore_permissions=True, ignore_mandatory=True, ignore_links=True)
