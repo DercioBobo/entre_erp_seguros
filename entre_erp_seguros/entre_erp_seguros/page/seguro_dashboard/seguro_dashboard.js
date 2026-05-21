@@ -101,8 +101,14 @@ class SegurosDashboard {
 	}
 
 	_render_kpis(d) {
-		const fmt_n = (v) => format_number(v || 0, null, 0);
-		const fmt_c = (v) => 'MT ' + format_number(v || 0, null, 2);
+		const fmt_n = (v) => Number(v || 0).toLocaleString(undefined, {
+			maximumFractionDigits: 0,
+		});
+
+		const fmt_c = (v) => 'MT ' + Number(v || 0).toLocaleString(undefined, {
+			minimumFractionDigits: 2,
+			maximumFractionDigits: 2,
+		});
 		const cards = [
 			{
 				key: 'active', icon: '🛡️', label: 'Apólices Activas',
