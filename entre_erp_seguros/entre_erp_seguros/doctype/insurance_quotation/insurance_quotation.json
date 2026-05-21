@@ -232,6 +232,7 @@
    "label": "Respostas (JSON)",
    "options": "JSON",
    "read_only": 1,
+   "hidden": 1,
    "description": "Preenchido automaticamente pelo formulário de factores de risco"
   },
   {

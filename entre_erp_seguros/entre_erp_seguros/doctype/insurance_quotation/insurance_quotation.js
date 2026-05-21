@@ -384,7 +384,8 @@ function _serialize_answers(frm, container, factors) {
         }
     });
 
-    // Write silently without triggering form dirty or re-render
-    frm.doc.risk_factors_json = JSON.stringify(answers, null, 2);
+    const newJson = JSON.stringify(answers, null, 2);
+    if (frm.doc.risk_factors_json === newJson) return;
+    frm.doc.risk_factors_json = newJson;
     frm.dirty();
 }

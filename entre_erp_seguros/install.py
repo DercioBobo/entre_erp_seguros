@@ -442,12 +442,19 @@ def _create_workspace():
         return
 
     shortcuts_cfg = [
-        {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
-        {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
-        {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
-        {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
-        {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
-        {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
+        # Operations
+        {"type": "DocType", "label": "Cotações",        "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
+        {"type": "DocType", "label": "Apólices",        "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
+        {"type": "DocType", "label": "Pagamentos",      "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
+        {"type": "DocType", "label": "Sinistros",       "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
+        {"type": "DocType", "label": "Recibos",         "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
+        {"type": "DocType", "label": "Endossos",        "link_to": "Policy Endorsement",       "icon": "edit",        "color": "#00838f"},
+        # Settings / Configuration
+        {"type": "DocType", "label": "Produtos",        "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
+        {"type": "DocType", "label": "Ramos",           "link_to": "Insurance Branch",         "icon": "git-branch",  "color": "#4e342e"},
+        {"type": "DocType", "label": "Tabela de Taxas", "link_to": "Premium Rate Table",       "icon": "percent",     "color": "#1565c0"},
+        {"type": "DocType", "label": "Factores de Risco","link_to": "Risk Factor Template",    "icon": "list",        "color": "#558b2f"},
+        {"type": "DocType", "label": "Tipos de Cobertura","link_to": "Coverage Type",          "icon": "check-circle","color": "#6d4c41"},
     ]
 
     # Build content JSON — one shortcut block per entry; this is what the UI renders
