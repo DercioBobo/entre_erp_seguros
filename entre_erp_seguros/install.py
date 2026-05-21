@@ -349,14 +349,25 @@ def _create_print_formats():
         with open(fmt["html_path"], encoding="utf-8") as f:
             html_content = f.read()
 
-        pf = frappe.new_doc("Print Format")
-        pf.name = fmt["name"]
-        pf.doc_type = fmt["doc_type"]
-        pf.module = "Entre Erp Seguros"
-        pf.standard = "Yes"
-        pf.print_format_type = "Jinja"
-        pf.html = html_content
-        pf.insert(ignore_permissions=True)
+        try:
+            pf = frappe.new_doc("Print Format")
+            pf.update({
+                "name": fmt["name"],
+                "doc_type": fmt["doc_type"],
+                "module": "Entre Erp Seguros",
+                "standard": "Yes",
+                "print_format_type": "Jinja",
+                "html": html_content,
+            })
+            # flags.name_set prevents set_new_name() from overwriting our name
+            # with the result of make_autoname() (which can return None for some autonaming schemes)
+            pf.flags.name_set = True
+            pf.insert(ignore_permissions=True, set_name=fmt["name"])
+        except Exception:
+            frappe.log_error(
+                title=f"install: print format '{fmt['name']}' failed (non-blocking)",
+                message=frappe.get_traceback(),
+            )
 
 
 # ------------------------------------------------------------------
@@ -432,27 +443,35 @@ def _create_workspace():
     if frappe.db.exists("Workspace", "Seguros"):
         return
 
-    ws = frappe.new_doc("Workspace")
-    ws.update({
-        "name": "Seguros",
-        "title": "Seguros",
-        "module": "Entre Erp Seguros",
-        "icon": "shield",
-        "indicator_color": "orange",
-        "is_standard": 1,
-        "public": 1,
-        "sequence_id": 1.0,
-        "content": "[]",
-    })
+    try:
+        ws = frappe.new_doc("Workspace")
+        ws.update({
+            "name": "Seguros",
+            "label": "Seguros",
+            "title": "Seguros",
+            "module": "Entre Erp Seguros",
+            "icon": "shield",
+            "indicator_color": "orange",
+            "is_standard": 1,
+            "public": 1,
+            "sequence_id": 1.0,
+            "content": "[]",
+        })
 
-    for s in [
-        {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
-        {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
-        {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
-        {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
-        {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
-        {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
-    ]:
-        ws.append("shortcuts", s)
+        for s in [
+            {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
+            {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
+            {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
+            {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
+            {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
+            {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
+        ]:
+            row = ws.append("shortcuts", s)
+            row.name = frappe.generate_hash(length=10)
 
-    ws.insert(ignore_permissions=True, ignore_mandatory=True, ignore_links=True)
+        ws.insert(ignore_permissions=True, ignore_mandatory=True, ignore_links=True)
+    except Exception:
+        frappe.log_error(
+            title="install: workspace creation failed (non-blocking)",
+            message=frappe.get_traceback(),
+        )
