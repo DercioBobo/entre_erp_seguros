@@ -436,12 +436,29 @@ def _create_insurance_item():
 def _create_workspace():
     """
     Creates the Seguros workspace with shortcuts.
-    Bypasses mandatory/link validation so child-table quirks in different
-    Frappe v15 patch levels don't block installation.
     Idempotent — skips if the workspace already exists.
     """
     if frappe.db.exists("Workspace", "Seguros"):
         return
+
+    shortcuts_cfg = [
+        {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
+        {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
+        {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
+        {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
+        {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
+        {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
+    ]
+
+    # Build content JSON — one shortcut block per entry; this is what the UI renders
+    content = [
+        {
+            "id": frappe.generate_hash(length=8),
+            "type": "shortcut",
+            "data": {"shortcut_name": s["label"], "col": 3},
+        }
+        for s in shortcuts_cfg
+    ]
 
     try:
         ws = frappe.new_doc("Workspace")
@@ -455,17 +472,10 @@ def _create_workspace():
             "is_standard": 1,
             "public": 1,
             "sequence_id": 1.0,
-            "content": "[]",
+            "content": frappe.as_json(content),
         })
 
-        for s in [
-            {"type": "DocType", "label": "Cotações",   "link_to": "Insurance Quotation",     "icon": "file-text",   "color": "#F57C00"},
-            {"type": "DocType", "label": "Apólices",   "link_to": "Insurance Policy",         "icon": "shield",      "color": "#2e7d32"},
-            {"type": "DocType", "label": "Pagamentos", "link_to": "Premium Payment",          "icon": "credit-card", "color": "#1565c0"},
-            {"type": "DocType", "label": "Sinistros",  "link_to": "Insurance Claim",          "icon": "alert-circle","color": "#c62828"},
-            {"type": "DocType", "label": "Recibos",    "link_to": "Claim Settlement Receipt", "icon": "file-text",   "color": "#2e7d32"},
-            {"type": "DocType", "label": "Produtos",   "link_to": "Insurance Product",        "icon": "package",     "color": "#6a1b9a"},
-        ]:
+        for s in shortcuts_cfg:
             row = ws.append("shortcuts", s)
             row.name = frappe.generate_hash(length=10)
 
