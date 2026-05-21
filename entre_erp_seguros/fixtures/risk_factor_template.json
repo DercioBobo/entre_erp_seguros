@@ -1,6 +1,7 @@
 [
   {
     "doctype": "Risk Factor Template",
+    "name": "Template VIDA",
     "template_name": "Template VIDA",
     "branch": "Vida/Crédito",
     "description": "Factores de risco para seguros de vida e crédito.",
@@ -39,6 +40,7 @@
   },
   {
     "doctype": "Risk Factor Template",
+    "name": "Template AUTO",
     "template_name": "Template AUTO",
     "branch": "Automóvel",
     "description": "Factores de risco para seguros automóvel.",
@@ -76,6 +78,7 @@
   },
   {
     "doctype": "Risk Factor Template",
+    "name": "Template HABITAÇÃO",
     "template_name": "Template HABITAÇÃO",
     "branch": "Habitação",
     "description": "Factores de risco para seguros de habitação.",

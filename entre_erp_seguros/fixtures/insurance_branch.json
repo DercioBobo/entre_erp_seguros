@@ -1,6 +1,7 @@
 [
   {
     "doctype": "Insurance Branch",
+    "name": "Vida/Crédito",
     "branch_name": "Vida/Crédito",
     "branch_code": "VIDA",
     "description": "Seguros de vida, crédito e acidentes pessoais.",
@@ -8,6 +9,7 @@
   },
   {
     "doctype": "Insurance Branch",
+    "name": "Automóvel",
     "branch_name": "Automóvel",
     "branch_code": "AUTO",
     "description": "Seguros para veículos automóveis, motociclos e veículos comerciais.",
@@ -15,6 +17,7 @@
   },
   {
     "doctype": "Insurance Branch",
+    "name": "Habitação",
     "branch_name": "Habitação",
     "branch_code": "HABIT",
     "description": "Seguros para imóveis residenciais e conteúdos domésticos.",
@@ -22,6 +25,7 @@
   },
   {
     "doctype": "Insurance Branch",
+    "name": "Funeral",
     "branch_name": "Funeral",
     "branch_code": "FUN",
     "description": "Seguros de assistência funeral e despesas associadas.",
