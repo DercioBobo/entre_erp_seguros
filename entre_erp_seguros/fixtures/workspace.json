@@ -9,6 +9,7 @@
     "is_standard": 1,
     "public": 1,
     "sequence_id": 1,
+    "content": "[{\"id\":\"card-overview\",\"type\":\"card\",\"data\":{\"card_name\":\"Visão Geral\",\"col\":4}},{\"id\":\"card-transacoes\",\"type\":\"card\",\"data\":{\"card_name\":\"Transacções\",\"col\":4}},{\"id\":\"card-config\",\"type\":\"card\",\"data\":{\"card_name\":\"Configuração\",\"col\":4}}]",
     "shortcuts": [
       {
         "doctype": "Workspace Shortcut",
